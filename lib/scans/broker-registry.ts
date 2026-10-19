@@ -1,0 +1,240 @@
+/**
+ * Curated data-broker / people-search registry for the ACT phase.
+ *
+ * Every entry links to the operator's own published removal (opt-out) page.
+ * These pages change over time — each entry carries `lastChecked` and the
+ * letters UI tells users to verify the URL before sending.
+ *
+ * Scope note: Erasure populates this list to HELP PEOPLE REMOVED THEMSELVES.
+ * It is not used for locating people. Keep it that way.
+ */
+
+export type BrokerEntry = {
+  id: string;
+  name: string;
+  category: "people-search" | "data-broker" | "background-check";
+  jurisdictions: string[]; // e.g. ["US"], ["EU"], ["global"]
+  optoutUrl: string;
+  /** What info the removal flow typically asks for. */
+  requires: Array<"fullName" | "email" | "address" | "phone" | "birthdate" | "photoIdNote">;
+  effort: "form" | "email" | "postal";
+  note?: string;
+  lastChecked: string; // manual verification date; update via PRs
+};
+
+export const BROKER_REGISTRY: BrokerEntry[] = [
+  {
+    id: "fastpeoplesearch",
+    name: "FastPeopleSearch",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.fastpeoplesearch.com/removal",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "truepeoplesearch",
+    name: "TruePeopleSearch",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.truepeoplesearch.com/removal",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "whitepages",
+    name: "Whitepages",
+    category: "background-check",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.whitepages.com/suppression-requests",
+    requires: ["fullName", "address"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "spokeo",
+    name: "Spokeo",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.spokeo.com/opt-out",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "beenverified",
+    name: "BeenVerified",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.beenverified.com/app/optout/discovery",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "intelius",
+    name: "Intelius",
+    category: "background-check",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.intelius.com/optout/",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "instantcheckmate",
+    name: "Instant Checkmate",
+    category: "background-check",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.instantcheckmate.com/suppression/",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "peoplefinders",
+    name: "PeopleFinders",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.peoplefinders.com/optout",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "radaris",
+    name: "Radaris",
+    category: "people-search",
+    jurisdictions: ["US", "global"],
+    optoutUrl: "https://radaris.com/page/how-to-remove",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "mylife",
+    name: "MyLife",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.mylife.com/reeng/optout.ep",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "thatsThem",
+    name: "ThatsThem",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://thatsthem.com/optout",
+    requires: ["email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "familytreenow",
+    name: "FamilyTreeNow",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.familytreenow.com/optout",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "advancedbackgroundchecks",
+    name: "Advanced Background Checks",
+    category: "background-check",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.advancedbackgroundchecks.com/optout.aspx",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "socialcatfish",
+    name: "Social Catfish",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://socialcatfish.com/optout",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "clustrmaps",
+    name: "ClustrMaps",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://clustrmaps.com/blank/optout",
+    requires: ["fullName", "address"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "peekyou",
+    name: "PeekYou",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.peekyou.com/privacy",
+    requires: ["fullName", "email"],
+    effort: "form",
+    note: "Removal request flow is linked from the privacy page.",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "zabasearch",
+    name: "ZabaSearch",
+    category: "people-search",
+    jurisdictions: ["US"],
+    optoutUrl: "https://www.zabasearch.com/privacy-policy/",
+    requires: ["fullName", "email"],
+    effort: "form",
+    note: "Removal instructions live in the privacy policy page.",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "acxiom",
+    name: "Acxiom",
+    category: "data-broker",
+    jurisdictions: ["US", "global"],
+    optoutUrl: "https://www.acxiom.com/about-us/privacy/consumer-privacy-request/",
+    requires: ["fullName", "email", "address"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "epsilon",
+    name: "Epsilon",
+    category: "data-broker",
+    jurisdictions: ["US", "global"],
+    optoutUrl: "https://www.epsilon.com/us/privacy-portal",
+    requires: ["fullName", "email"],
+    effort: "form",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "lexisnexis",
+    name: "LexisNexis",
+    category: "data-broker",
+    jurisdictions: ["US", "global"],
+    optoutUrl: "https://optout.lexisnexis.com/",
+    requires: ["fullName", "birthdate", "photoIdNote"],
+    effort: "form",
+    note: "Full-file suppression may require ID verification; read their FAQ first.",
+    lastChecked: "2026-10",
+  },
+  {
+    id: "veriphiq-generic-email",
+    name: "Any broker without a form (letter route)",
+    category: "data-broker",
+    jurisdictions: ["global"],
+    optoutUrl: "https://github.com/your-handle/erasure",
+    requires: ["fullName", "email"],
+    effort: "email",
+    note: "Template letter — attach to an email to any operator not in this list.",
+    lastChecked: "2026-10",
+  },
+];
