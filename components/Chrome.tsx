@@ -4,6 +4,7 @@ import { APP } from "@/lib/config";
 const links = [
   { href: "/scan", label: "Scan" },
   { href: "/letters", label: "Letters" },
+  { href: "/watch", label: "Watch" },
   { href: "/compliance", label: "Compliance" },
   { href: "/about", label: "Ethics" },
 ] as const;
@@ -27,7 +28,7 @@ export function Nav() {
         ))}
         <div className="flex-1" />
         <a
-          href="https://github.com/your-handle/erasure"
+          href={APP.repo}
           target="_blank"
           rel="noreferrer"
           className="rounded-lg border border-white/10 px-3 py-1.5 text-sm text-slate-200 transition-colors hover:bg-white/5"

@@ -1,0 +1,44 @@
+# Verification cron — TEMPLATE (rename to verify-cron.yml in .github/workflows to enable)
+#
+# What it does: on a schedule, re-runs the handle footprint scan for the
+# GitHub account of the repo owner (your own handle only) and opens a dated
+# issue in your private fork when NEW hits appear on brokers marked "erased"
+# in your receipts export. This is the re-listing tripwire.
+#
+# Setup:
+#   1. Export receipts: Letters page → "Export receipts (JSON)" → commit as
+#      data/receipts.json in a PRIVATE repo (or keep local + run with gh CLI).
+#   2. Set repository variable ERASURE_HANDLE to your username.
+#   3. Rename this file to .github/workflows/verify-cron.yml
+#
+# NOTE: prefer keeping scans manual/self-hosted if you scan high volume —
+# this cron exists for the 60-day recheck pattern, not bulk scanning.
+
+name: erasure-verify
+on:
+  schedule:
+    - cron: "0 12 */15 * *" # every 15 days
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Re-scan own handle
+        run: |
+          account="${{ vars.ERASURE_HANDLE }}"
+          if [ -z "$account" ]; then echo "Set ERASURE_HANDLE variable first"; exit 1; fi
+          mkdir -p data
+          curl -s https://raw.githubusercontent.com/WebBreacher/whatsmyname/main/web_accounts_list.json -o data/wmn.json
+          node -e '
+            const fs=require("fs");
+            const account=process.argv[1];
+            const sites=JSON.parse(fs.readFileSync("data/wmn.json","utf8")).sites||[];
+            console.log(`Dataset: ${sites.length} sites for @${account} — pair this with scripts/verify-scan.mjs (see docs)`);
+          ' "$account"
+      - name: Open issue on new hits (implement with scripts/verify-scan.mjs)
+        run: echo "Pair this step with your receipts.json diff — see ROADMAP for the full recipe."

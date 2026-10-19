@@ -227,7 +227,7 @@ export const BROKER_REGISTRY: BrokerEntry[] = [
     lastChecked: "2026-10",
   },
   {
-    id: "veriphiq-generic-email",
+    id: "generic-letter-route",
     name: "Any broker without a form (letter route)",
     category: "data-broker",
     jurisdictions: ["global"],

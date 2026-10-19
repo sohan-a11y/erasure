@@ -1,3 +1,4 @@
+import CrowdIndex from "@/components/CrowdIndex";
 import { Panel, Stat } from "@/components/ui";
 import type { ComplianceStat } from "@/lib/types";
 
@@ -5,7 +6,7 @@ export const metadata = { title: "Broker Compliance Index" };
 
 /**
  * Seeded from PUBLIC, citable reporting. The crowd-verified rows come from
- * Erasure users' receipts once Phase 2 (optional Postgres mode) is enabled.
+ * Erasure users' consented receipts (Phase 2, optional Postgres mode).
  * `source` names evidence origin; avoid unsourced numeric claims.
  */
 const SEEDED: ComplianceStat[] = [
@@ -21,7 +22,7 @@ const SEEDED: ComplianceStat[] = [
     honorRate: 0,
     relistReported: 0,
     source:
-      "Service discontinued Jan 15, 2026 (fully closed Feb 16, 2026). 'Exposed-count' incumbent left the lane — the reason this project exists.",
+      "Service discontinued Jan 15, 2026 (fully closed Feb 16, 2026). The 'exposed-count' incumbent left the lane — the reason this project exists.",
   },
   {
     broker: "Mozilla Monitor",
@@ -45,8 +46,8 @@ export default function CompliancePage() {
       <h1 className="text-3xl font-bold tracking-tight text-white">Broker Compliance Index</h1>
       <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
         The scoreboard no platform publishes: which operators honor deletions, which ghost you, and
-        which quietly re-list you. Phase 1 ships the concept with public, citable evidence. Phase 2
-        (optional Postgres) aggregates your consent-based receipts into the public rows.
+        which quietly re-list you. Public/citable evidence below; crowd-verified rows arrive from
+        consented receipts once this deployment enables the open index.
       </p>
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -56,6 +57,7 @@ export default function CompliancePage() {
       </div>
 
       <div className="mt-8 grid gap-4">
+        <CrowdIndex />
         {SEEDED.map((row) => (
           <Panel key={row.broker} title={row.broker} sub={row.honorRate === null ? "evidence row" : undefined}>
             {row.honorRate !== null ? (
@@ -75,14 +77,6 @@ export default function CompliancePage() {
           </Panel>
         ))}
       </div>
-
-      <Panel title="Contribute rows" sub="The index is open-source — it grows the boring way: receipts.">
-        <ul className="list-disc space-y-1.5 pl-5 text-sm text-slate-300">
-          <li>Run the Act loop, log outcomes, export receipts JSON.</li>
-          <li>PR your anonymized outcome stats to <code className="rounded bg-white/10 px-1">/docs/compliance-rows.md</code> (counts only, never identities).</li>
-          <li>Or self-host Phase 2 (Postgres mode) and publish your instance&apos;s aggregate endpoint.</li>
-        </ul>
-      </Panel>
     </div>
   );
 }

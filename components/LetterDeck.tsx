@@ -23,12 +23,15 @@ export default function LetterDeck() {
   const report = useMemo(() => loadReport(), []);
   const [receipts, setReceipts] = useState<BrokerReceipt[]>(() => loadReceipts());
   const [openLetter, setOpenLetter] = useState<string | null>(null);
+  const [publishState, setPublishState] = useState<
+    { state: "idle" } | { state: "in" } | { state: "done"; count: number } | { state: "notEnabled" } | { state: "error" }
+  >({ state: "idle" });
 
   const identity = report?.identity;
 
   const rows: Array<{ broker: BrokerEntry; receipt?: BrokerReceipt; letter?: ReturnType<typeof buildLetter> }> =
     useMemo(() => {
-      return BROKER_REGISTRY.filter((b) => b.id !== "veriphiq-generic-email").map((broker) => {
+      return BROKER_REGISTRY.filter((b) => b.id !== "generic-letter-route").map((broker) => {
         const receipt = receipts.find((r) => r.brokerId === broker.id);
         const letter = identity?.fullName ? buildLetter(broker, identity) : undefined;
         return { broker, receipt, letter };
@@ -101,8 +104,47 @@ export default function LetterDeck() {
           <button onClick={exportReceipts} className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-slate-300 hover:bg-white/5">
             Export receipts (JSON)
           </button>
+          <button
+            onClick={async () => {
+              setPublishState({ state: "in" });
+              try {
+                let okCount = 0;
+                let disabled = false;
+                for (const r of receipts.filter((x) => x.status !== "pending")) {
+                  const resp = await fetch("/api/receipts/submit", {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify({
+                      brokerId: r.brokerId,
+                      status: r.status,
+                      occurredAt: r.resolvedAt ?? r.letterSentAt ?? new Date().toISOString(),
+                      jurisdiction: identity!.jurisdiction,
+                    }),
+                  });
+                  if (resp.status === 401 || resp.status === 501) { disabled = true; break; }
+                  if (resp.ok) okCount++;
+                }
+                if (disabled) setPublishState({ state: "notEnabled" });
+                else setPublishState({ state: "done", count: okCount });
+              } catch {
+                setPublishState({ state: "error" });
+              }
+            }}
+            className="rounded-lg border border-fuchsia-500/40 px-3 py-1.5 text-xs text-fuchsia-300 hover:bg-fuchsia-500/10"
+          >
+            Publish outcomes to the open index
+          </button>
+          {publishState.state === "done" ? (
+            <span className="text-xs text-emerald-400">published {publishState.count} anonymized event(s) — counts only, no identities.</span>
+          ) : publishState.state === "notEnabled" ? (
+            <span className="text-xs text-slate-500">index not enabled on this deployment (POSTGRES_URL).</span>
+          ) : publishState.state === "error" ? (
+            <span className="text-xs text-amber-400">publish failed — try later.</span>
+          ) : publishState.state === "in" ? (
+            <span className="animate-pulse text-xs text-slate-400">publishing…</span>
+          ) : null}
           <span className="text-xs text-slate-500">
-            Your receipt trail is the evidence that feeds the public Compliance Index (Phase 2 DB).
+            Your receipt trail is the evidence that feeds the public Compliance Index.
           </span>
         </div>
       </Panel>

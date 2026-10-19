@@ -51,7 +51,8 @@ Aimed at yourself, OSINT is self-defense. That's the whole ballgame. See the in-
 | UI | Tailwind CSS v4, zero component deps |
 | Scan engine | Open [WhatsMyName](https://github.com/WebBreacher/whatsmyname) ruleset (300+ platforms) + built-in fallback list |
 | Breach data | [HIBP](https://haveibeenpwned.com) — free pwned-password range API (k-anonymity) + optional `HIBP_KEY` for account breaches |
-| Storage | **Zero-config**: reports, letters, receipts in `localStorage` + JSON export. Optional Postgres mode ships in Phase 2. |
+| Storage | **Zero-config**: reports/letters in `localStorage` + JSON export. **Optional** `POSTGRES_URL` (e.g. free Neon) = consented, anonymized receipt events → public Compliance Index. |
+| Watch | Free Certificate-Transparency lookups for domains you own (the crt.sh relief valve) |
 | Deploy | Vercel one-click (free tier) |
 
 ## Quick start
@@ -77,6 +78,8 @@ Set `HIBP_KEY` (free-style key from [haveibeenpwned.com/API/Key](https://haveibe
 | Var | Required | Purpose |
 |---|---|---|
 | `HIBP_KEY` | no | enables email-breach lookups (server-side only) |
+| `POSTGRES_URL` | no | enables the open Compliance Index (Anonymized receipt events only) |
+| `SUBMIT_TOKEN` | no | shared secret required on the receipts submit route |
 | `WHATSMYNAME_LIST_URL` | no | override dataset source |
 | `SCANNER_USER_AGENT` | no | override scanner UA |
 
@@ -90,9 +93,10 @@ Set `HIBP_KEY` (free-style key from [haveibeenpwned.com/API/Key](https://haveibe
 ## Roadmap
 
 - [x] Phase 1 — the loop, zero-config deploy, share-card generator
-- [ ] Phase 2 — optional Postgres mode → public compliance rows from consented receipts (+ GitHub Actions cron template for verification jobs)
+- [x] Phase 2 — optional Postgres mode → public compliance rows from consented receipts +
+      `docs/verify-cron.TEMPLATE.yml` for the 60-day re-listing tripwire
+- [x] Watch tab — free CT-log change detection for domains you own
 - [ ] Jurisdiction templates: UK DMA, Canada PIPEDA, India DPDP
-- [ ] Domain watch tab: new subdomains/cert changes for domains you own
 - [ ] org-SaaS exposure audit (public Trello/Slack artifacts under *your own* domain)
 
 ## License
