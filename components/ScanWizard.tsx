@@ -215,7 +215,7 @@ export default function ScanWizard() {
 
       <Panel title="Your identity inputs" sub="Email/name/city are optional — they power the letters module. Nothing is uploaded; identity data lives only in your browser's localStorage.">
         <div className="grid gap-3 sm:grid-cols-2">
-          <Field label="Username or handle *" value={username} onChange={setUsername} placeholder="your-handle" />
+          <Field label="Username or handle *" value={username} onChange={setUsername} placeholder="your-username" />
           <Field label="Email (breach scan + letters)" value={email} onChange={setEmail} placeholder="you@example.com" type="email" />
           <Field label="Full name (for letters)" value={fullName} onChange={setFullName} placeholder="Optional — used in deletion letters" />
           <Field label="City" value={city} onChange={setCity} />

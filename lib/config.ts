@@ -3,7 +3,7 @@ export const APP = {
   tagline: "Find it. Erase it. Prove it stayed gone.",
   description:
     "The free, open-source OSINT loop for your own identity: detect your exposure, generate removal requests, verify the brokers actually deleted you, and expose the ones who refuse. Every step is consent-scoped to your own data.",
-  repo: "https://github.com/your-handle/erasure",
+  repo: "https://github.com/sohan-a11y/erasure",
   version: "0.9.0",
   license: "MIT",
 } as const;

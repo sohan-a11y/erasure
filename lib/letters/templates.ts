@@ -94,7 +94,7 @@ your site also offers an automated form.
 
 ${signature(identity)}
 
---- Erasure open-source letter engine (https://github.com/your-handle/erasure) ---`;
+--- Erasure open-source letter engine (https://github.com/sohan-a11y/erasure) ---`;
 
   return {
     brokerId: broker.id,

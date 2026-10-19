@@ -11,7 +11,7 @@ Shodan finds exposed *devices*. Sherlock finds your *handles*. HIBP *reports* yo
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org)
 [![PRs: charter-checked](https://img.shields.io/badge/PRs-charter%E2%80%91checked-brightgreen)](./app/about/page.tsx)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyour-handle%2Ferasure&env=HIBP_KEY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsohan-a11y%2Ferasure&env=HIBP_KEY)
 
 </div>
 
@@ -58,7 +58,7 @@ Aimed at yourself, OSINT is self-defense. That's the whole ballgame. See the in-
 ## Quick start
 
 ```bash
-git clone https://github.com/your-handle/erasure
+git clone https://github.com/sohan-a11y/erasure
 cd erasure
 npm install
 cp .env.example .env.local   # HIBP_KEY= is optional
@@ -69,7 +69,7 @@ Open http://localhost:3000 → **Run your exposure scan**.
 
 ## Deploy (60 seconds)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyour-handle%2Ferasure&env=HIBP_KEY)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsohan-a11y%2Ferasure&env=HIBP_KEY)
 
 Set `HIBP_KEY` (free-style key from [haveibeenpwned.com/API/Key](https://haveibeenpwned.com/API/Key)) to light up the breach module — everything else works keyless.
 

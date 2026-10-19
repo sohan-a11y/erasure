@@ -231,7 +231,7 @@ export const BROKER_REGISTRY: BrokerEntry[] = [
     name: "Any broker without a form (letter route)",
     category: "data-broker",
     jurisdictions: ["global"],
-    optoutUrl: "https://github.com/your-handle/erasure",
+    optoutUrl: "https://github.com/sohan-a11y/erasure",
     requires: ["fullName", "email"],
     effort: "email",
     note: "Template letter — attach to an email to any operator not in this list.",
