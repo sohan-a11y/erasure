@@ -21,6 +21,7 @@ export const metadata: Metadata = {
   },
   description: APP.description,
   keywords: ["OSINT", "data brokers", "opt-out", "privacy", "exposure scan", "open source"],
+  twitter: { card: "summary_large_image", creator: "@sohan_a11y" },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
